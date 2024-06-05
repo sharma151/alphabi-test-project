@@ -5,9 +5,11 @@ import { useState } from 'react';
 const YourComponent = () => {
   const [textForGIF, setTextForGIF] = useState('');
   const [generatedGIF, setGeneratedGIF] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const generateGIF = async () => {
     try {
+      setLoading(true);
       const response = await fetch(`/api/generateGIF?query=${textForGIF}`);
       const data = await response.json();
       
@@ -18,6 +20,8 @@ const YourComponent = () => {
       }
     } catch (error) {
       console.error('Error generating GIF:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -38,8 +42,9 @@ const YourComponent = () => {
       />
       <button onClick={handleGenerate}>Generate GIF</button>
 
-      {/* Display the generated GIF */}
-      {generatedGIF && (
+      {/* Display the generated GIF or loading indicator */}
+      {loading && <p>Loading...</p>}
+      {generatedGIF && !loading && (
         <img src={generatedGIF} alt="Generated GIF" />
       )}
     </div>
