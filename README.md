@@ -1,3 +1,1 @@
-# Authentication in Next.js with Firebase
-
-
+Next.js Application with Firebase Authentication and GIPHY API Integration
